@@ -80,6 +80,7 @@ export const getServerSideProps: GetServerSideProps<IProps> = async (
 ) => {
   const categories = await fetchCategories()
   const products = await fetchProducts()
+  // const session = await getSession(context)
 
   return {
     props: {

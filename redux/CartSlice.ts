@@ -51,11 +51,10 @@ export const selectCartItemWithId = (state: RootState, id: string) =>
   state.cart.items.filter((item: Product) => item._id === id)
 
 //   Calculate total price of product in cart
-export const selelectCartTotal = (state: RootState) => {
+export const selectCartTotal = (state: RootState) =>
   state.cart.items.reduce(
     (total: number, item: Product) => (total += item.price),
     0
   )
-}
 
 export default cartSlice.reducer
