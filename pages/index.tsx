@@ -1,7 +1,8 @@
-import type { GetServerSideProps, NextPage } from 'next'
+import type { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import { Tab } from '@headlessui/react'
+import { useSelector } from 'react-redux'
 
 import Cart from '../components/Cart'
 import Navbar from '../components/Navbar'
@@ -9,19 +10,25 @@ import Header from '../components/Header'
 import { fetchCategories } from '../utils/fetchCategories'
 import { fetchProducts } from '../utils/fetchProducts'
 import CardProduct from '../components/CardProduct'
+import { selectCartItems } from '../redux/CartSlice'
+// import { getSession } from 'next-auth/react'
+// import type { Session } from 'next-auth'
 
 interface IProps {
   categories: Category[]
   products: Product[]
+  // session: Session | null
 }
 
 const Home = ({ categories, products }: IProps) => {
+  const items = useSelector(selectCartItems)
+
   const showProducts = (category: number) => {
     return products
       .filter((product) => product.category._ref === categories[category]._id)
       .map((item) => <CardProduct product={item} key={item._id} />)
   }
-  console.log(products)
+
   return (
     <div className="">
       <Head>
@@ -30,7 +37,7 @@ const Home = ({ categories, products }: IProps) => {
       </Head>
       <Navbar />
       <main className="relative h-[200vh] bg-white">
-        <Cart />
+        {items.length > 0 && <Cart />}
         <Header />
       </main>
       <section className="relative z-40 -mt-[90vh] min-h-screen bg-black">
@@ -86,6 +93,7 @@ export const getServerSideProps: GetServerSideProps<IProps> = async (
     props: {
       categories,
       products,
+      // session,
     },
   }
 }

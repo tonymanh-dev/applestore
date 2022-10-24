@@ -5,17 +5,19 @@ import Link from 'next/link'
 import { useSelector } from 'react-redux'
 import { selectCartItems } from '../redux/CartSlice'
 import { logo, navLink } from '../utils/contants'
-import { signIn, signOut, useSession } from 'next-auth/react'
+// import { signIn, signOut, useSession } from 'next-auth/react'
 
+// Add feature google auth later
 const Navbar = () => {
-  const session = useSession()
+  // const session = useSession()
   const items = useSelector(selectCartItems)
+  const session = false
 
   return (
-    <header className="sticky top-0 z-30 flex h-[64px] w-full items-center justify-between  bg-[#e7ecee] px-4 md:px-8">
+    <header className="sticky top-0 z-30 flex h-[50px] w-full items-center justify-between  bg-[#323232] px-4 md:px-8">
       <div className="flex items-center justify-center md:w-1/5">
         <Link href="/">
-          <div className="relative h-10 w-5 cursor-pointer opacity-75 transition hover:opacity-100">
+          <div className="relative h-10 w-10 cursor-pointer opacity-75 transition hover:opacity-100">
             <Image src={logo} layout="fill" objectFit="contain" />
           </div>
         </Link>
@@ -23,20 +25,24 @@ const Navbar = () => {
 
       <div className="hidden flex-1 items-center justify-center space-x-8 md:flex">
         {navLink.map((item) => (
-          <a key={item} href="/" className="navLink">
+          <a
+            key={item}
+            href="/"
+            className="cursor-pointer text-sm text-gray-100 opacity-75 transition hover:opacity-100"
+          >
             {item}
           </a>
         ))}
       </div>
-      <div className="-mr-2 flex items-center gap-3">
-        <div className="p-2">
+      <div className="-mr-2 flex items-center gap-3 ">
+        <div className="hidden cursor-pointer p-2 text-gray-100 opacity-75 hover:opacity-100 sm:flex">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="h-6 w-6 cursor-pointer opacity-75 transition hover:opacity-100"
+            className="h-[18px] w-[18px] transition "
           >
             <path
               strokeLinecap="round"
@@ -47,17 +53,19 @@ const Navbar = () => {
         </div>
 
         <Link href="checkout">
-          <div className="relative cursor-pointer p-2 ">
-            <span className="absolute top-0 right-0 z-[99] m-auto flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 text-xs font-medium text-white">
-              {items.length}
-            </span>
+          <div className="relative hidden p-2 sm:flex">
+            {items.length > 0 && (
+              <span className="absolute top-0 right-0 z-[99] m-auto flex h-4 w-4 items-center justify-center rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 text-[10px] font-medium text-white">
+                {items.length}
+              </span>
+            )}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="h-6 w-6 opacity-75 transition hover:opacity-100"
+              className="h-5 w-5 cursor-pointer  text-gray-100 opacity-75 transition hover:opacity-100"
             >
               <path
                 strokeLinecap="round"
@@ -67,26 +75,26 @@ const Navbar = () => {
             </svg>
           </div>
         </Link>
-        <div className="relative cursor-pointer p-2">
+        <div className="relative cursor-pointer p-2 text-gray-100 opacity-75 hover:opacity-100">
           {session ? (
             <span className="flex">
               <Image
                 src="https://img.seadn.io/files/0996c2cc8697727947c8bf3682c99a58.png?fit=max&w=1000"
                 width={26}
                 height={26}
-                className="rounded-full"
-                onClick={() => signOut()}
+                className="rounded-full transition"
+                onClick={() => {}}
               />
             </span>
           ) : (
-            <button onClick={() => signIn()}>
+            <span className="" onClick={() => {}}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="h-6 w-6 cursor-pointer opacity-75 transition hover:opacity-100"
+                className="h-5 w-5 transition"
               >
                 <path
                   strokeLinecap="round"
@@ -94,7 +102,7 @@ const Navbar = () => {
                   d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
                 />
               </svg>
-            </button>
+            </span>
           )}
         </div>
       </div>

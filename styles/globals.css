@@ -13,9 +13,6 @@ body {
 }
 
 @layer components {
-  .navLink {
-    @apply cursor-pointer opacity-75 transition hover:opacity-100;
-  }
   .lineGradient {
     text-align: center;
     padding-bottom: 5px;

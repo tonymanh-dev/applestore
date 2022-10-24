@@ -5,6 +5,7 @@ import { selectCartItems } from '../redux/CartSlice'
 
 const Cart = () => {
   const items = useSelector(selectCartItems)
+
   return (
     <Link href="/checkout">
       <div className="fixed right-10 bottom-10 z-[99] flex h-[50px] w-[50px] cursor-pointer items-center justify-center rounded-full bg-gray-200 shadow">

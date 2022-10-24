@@ -6,11 +6,12 @@ import { useSelector } from 'react-redux'
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 
 import Navbar from '../components/Navbar'
-import { selectCartItems, selectCartTotal } from '../redux/CartSlice'
 import Button from '../components/Button'
 import CheckoutProduct from '../components/CheckoutProduct'
+import { selectCartItems, selectCartTotal } from '../redux/CartSlice'
 import { fetchPostJSON } from '../utils/api-helpers'
 import getStripe from '../utils/getStripe'
+import { currencyFormat } from '../utils'
 
 const Checkout = () => {
   const [loading, setLoading] = useState(false)
@@ -70,18 +71,18 @@ const Checkout = () => {
   return (
     <div>
       <Head>
-        <title>Ordering - Apple</title>
+        <title>Ordering - Apple store</title>
       </Head>
       <Navbar />
 
       <main className="px-4 pt-10 md:px-20">
-        <div>
+        <div className="space-y-2">
           <h1 className="text-2xl font-semibold ">
             {isItem > 0
               ? 'Check the contents of your bag.'
               : 'There is no product in your bag.'}
           </h1>
-          <p className="text-gray-700 ">
+          <p className="pb-4 text-gray-700">
             All orders are delivered with free shipping.
           </p>
 
@@ -104,10 +105,9 @@ const Checkout = () => {
                   <div className="flex w-full items-center justify-between ">
                     <p>Subtotal </p>
                     <p className="font-medium">
-                      {items
-                        .reduce((total, item) => (total += item.price), 0)
-                        .toLocaleString('en-US')}{' '}
-                      yen
+                      {currencyFormat(
+                        items.reduce((total, item) => (total += item.price), 0)
+                      )}
                     </p>
                   </div>
                   <div className="flex w-full items-center justify-between  ">
@@ -128,7 +128,7 @@ const Checkout = () => {
 
                 <div className="flex items-center justify-between border-t border-gray-200 py-6 text-lg font-semibold ">
                   <h4>Total</h4>
-                  <h4>{cartTotal.toLocaleString('en-US')} yen</h4>
+                  <h4>{currencyFormat(cartTotal)}</h4>
                 </div>
                 <div className="text-right text-sm ">
                   <p className="text-xs text-gray-600">
@@ -156,7 +156,7 @@ const Checkout = () => {
                 <div className="flex flex-col justify-between space-y-6 rounded-lg bg-purple-50 p-8">
                   <p className=" text-center text-lg font-medium">
                     Pay with other methods such as card, ApplePay, Orico Loan{' '}
-                    {cartTotal.toLocaleString('en-US')} yen (tax included)
+                    {currencyFormat(cartTotal)} (tax included)
                   </p>
 
                   <Button

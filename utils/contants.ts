@@ -5,4 +5,5 @@ export const ipadHero =
 export const ipadProHero =
   'https://www.apple.com/v/home/at/images/heroes/ipad-pro/hero_ipadpro_order__fpc2supjug66_medium_2x.jpg'
 
-export const logo = 'https://rb.gy/vsvv2o'
+export const logo =
+  'https://www.apple.com/ac/globalnav/7/en_US/images/be15095f-5a20-57d0-ad14-cf4c638e223a/globalnav_apple_image__b5er5ngrzxqq_large.svg'

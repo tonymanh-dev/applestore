@@ -6,7 +6,7 @@ import Button from './Button'
 
 const Header = () => {
   return (
-    <section className="relative sticky top-0 flex h-screen max-w-[1300px] items-center  justify-center pb-20  md:pb-0">
+    <section className=" relative sticky top-0 flex h-screen max-w-[1300px] items-center justify-center pb-20 md:pb-0">
       <div className="grid grid-cols-1 gap-y-10 px-4 md:grid-cols-3 md:gap-y-0 md:px-20">
         <div className="col-span-2 flex h-[450px] justify-center px-0 pt-[130px] text-center transition-all duration-300 sm:px-10 md:h-full md:pr-10 md:pt-0">
           <Image src={ipadHero} width={450} height={500} objectFit="contain" />
