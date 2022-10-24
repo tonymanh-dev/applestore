@@ -4,17 +4,17 @@ interface IProps {
   title: string
   onClick?: () => void
   loading?: boolean
-  large?: string
+  large?: boolean
   icon?: boolean
-  padding?: string
+  styles?: string
 }
 
-const Button = ({ title, onClick, loading, large, icon, padding }: IProps) => {
+const Button = ({ title, onClick, loading, large, icon, styles }: IProps) => {
   return (
     <button
       className={`${
-        large ? 'px-10 py-3 text-lg ' : 'px-6 py-2 '
-      } ${padding} group relative inline-flex items-center justify-center overflow-hidden rounded-full font-medium text-white shadow-xl transition duration-300 ease-out hover:ring-1 hover:ring-purple-500`}
+        large ? 'py-4 px-10 ' : 'px-8 py-3'
+      } ${styles} group relative inline-flex items-center justify-center overflow-hidden rounded-full font-medium text-white shadow-xl transition duration-300 ease-out hover:ring-1 hover:ring-purple-500`}
       onClick={onClick}
     >
       <span className="absolute inset-0 h-full w-full bg-gradient-to-br from-sky-500 via-purple-600 to-rose-500"></span>

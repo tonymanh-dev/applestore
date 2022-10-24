@@ -1,8 +1,9 @@
 import type { GetServerSideProps } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
-import { Tab } from '@headlessui/react'
+import { getSession } from 'next-auth/react'
+import type { Session } from 'next-auth'
 import { useSelector } from 'react-redux'
+import { Tab } from '@headlessui/react'
 
 import Cart from '../components/Cart'
 import Navbar from '../components/Navbar'
@@ -11,18 +12,17 @@ import { fetchCategories } from '../utils/fetchCategories'
 import { fetchProducts } from '../utils/fetchProducts'
 import CardProduct from '../components/CardProduct'
 import { selectCartItems } from '../redux/CartSlice'
-// import { getSession } from 'next-auth/react'
-// import type { Session } from 'next-auth'
 
 interface IProps {
   categories: Category[]
   products: Product[]
-  // session: Session | null
+  session: Session | null
 }
 
 const Home = ({ categories, products }: IProps) => {
   const items = useSelector(selectCartItems)
 
+  //Show products by category
   const showProducts = (category: number) => {
     return products
       .filter((product) => product.category._ref === categories[category]._id)
@@ -73,7 +73,6 @@ const Home = ({ categories, products }: IProps) => {
               </Tab.Panels>
             </Tab.Group>
           </div>
-          {/* <Product categories={categories} products={products} /> */}
         </div>
       </section>
     </div>
@@ -87,13 +86,13 @@ export const getServerSideProps: GetServerSideProps<IProps> = async (
 ) => {
   const categories = await fetchCategories()
   const products = await fetchProducts()
-  // const session = await getSession(context)
+  const session = await getSession(context)
 
   return {
     props: {
       categories,
       products,
-      // session,
+      session,
     },
   }
 }

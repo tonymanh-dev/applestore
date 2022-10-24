@@ -90,6 +90,7 @@ const Checkout = () => {
             <Button
               title="Continue shopping"
               onClick={() => router.push('/')}
+              large
             />
           )}
         </div>
@@ -151,7 +152,7 @@ const Checkout = () => {
                     /monthMonthlyfootnote
                   </p>
 
-                  <Button title="Buy in installments" padding="py-4" />
+                  <Button title="Buy in installments" large />
                 </div>
                 <div className="flex flex-col justify-between space-y-6 rounded-lg bg-purple-50 p-8">
                   <p className=" text-center text-lg font-medium">
@@ -162,8 +163,8 @@ const Checkout = () => {
                   <Button
                     loading={loading}
                     onClick={handleCheckout}
-                    padding="py-4"
                     title="Go to order producedure"
+                    large
                   />
                 </div>
               </div>

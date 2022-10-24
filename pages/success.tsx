@@ -13,11 +13,10 @@ import { useMediaQuery } from 'react-responsive'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 
-import { logo } from '../utils/contants'
 import Button from '../components/Button'
-import { fetchLineItems } from '../utils/fetchLineItems'
-
 import { currencyFormat } from '../utils/index'
+import { appleBlack, logo } from '../utils/contants'
+import { fetchLineItems } from '../utils/fetchLineItems'
 
 interface IProps {
   products: StripeProduct[]
@@ -26,26 +25,30 @@ interface IProps {
 const Success = ({ products }: IProps) => {
   const [mounted, setMounted] = useState(true)
   const [orderDetail, setOrderDetail] = useState(false)
+  const { data: session } = useSession()
 
   const router = useRouter()
   const { session_id } = router.query
 
+  // Calculate subtoal of each product
   const subtotal = products.reduce(
     (acc, product) => acc + product.price.unit_amount / 100,
     0
   )
+
+  // Get value TRUE by when screen smaller 768px
   const isMediumScreen = useMediaQuery({ query: '(max-width: 768px)' })
 
-  console.log(products)
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
+  //
   const isShowOrderDetail = isMediumScreen ? orderDetail : true
 
   const handleShowOrderDetail = () => {
     setOrderDetail((prev) => !prev)
   }
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   return (
     <div className="">
@@ -55,7 +58,7 @@ const Success = ({ products }: IProps) => {
       <header className="flex px-4 pt-4 md:hidden">
         <Link href="/">
           <div className="trasition relative h-16 w-8 cursor-pointer">
-            <Image src={logo} layout="fill" objectFit="contain" />
+            <Image src={appleBlack} layout="fill" objectFit="contain" />
           </div>
         </Link>
       </header>
@@ -63,7 +66,7 @@ const Success = ({ products }: IProps) => {
       <main className="grid h-full w-full grid-cols-1 overflow-hidden pb-10 md:h-screen md:grid-cols-12 md:pb-0">
         <section className="col-span-1 px-6 py-6 md:col-span-7 lg:px-10">
           <div className="trasition relative mb-2 hidden h-16 w-8 cursor-pointer md:block">
-            <Image src={logo} layout="fill" objectFit="contain" />
+            <Image src={appleBlack} layout="fill" objectFit="contain" />
           </div>
           <div className="flex items-center justify-start space-x-4">
             <CheckCircleIcon className="h-12 w-12 text-green-500" />
@@ -71,7 +74,9 @@ const Success = ({ products }: IProps) => {
               <p className="cursor-pointer text-sm hover:text-blue-500 hover:underline">
                 Order #{session_id?.slice(-10)}
               </p>
-              <h4 className="text-lg font-medium">Thank you Tony</h4>
+              <h4 className="text-lg font-medium">
+                Thank you {session ? session.user?.name : 'Guest'}
+              </h4>
             </div>
           </div>
           <div className="mt-4 space-y-6">
@@ -101,7 +106,8 @@ const Success = ({ products }: IProps) => {
               <Button
                 onClick={() => router.push('/')}
                 title="Continue shopping"
-                padding="py-5 md:py-4 md:px-6 w-full md:w-fit"
+                styles=" w-full md:w-fit"
+                large
               />
             </div>
           </div>
@@ -109,10 +115,13 @@ const Success = ({ products }: IProps) => {
 
         {mounted && (
           <section className="order-first col-span-1 overflow-y-auto border-l border-gray-200 bg-gray-100 px-6 py-6 md:order-2 md:col-span-5 lg:px-10">
-            <div className="flex justify-between border-y py-4  font-medium md:hidden">
+            <div
+              className="flex  justify-between py-4
+   font-medium  transition-all md:hidden"
+            >
               <button
                 onClick={handleShowOrderDetail}
-                className="flex items-center space-x-2 hover:text-blue-500"
+                className="flex items-center space-x-2 text-indigo-500"
               >
                 <ShoppingCartIcon className="h-5 w-5 text-indigo-500" />
                 <p className="">Show details</p>
@@ -125,7 +134,7 @@ const Success = ({ products }: IProps) => {
               <h4 className="text-lg">{currencyFormat(subtotal)}</h4>
             </div>
             {isShowOrderDetail && (
-              <div className="flex flex-col divide-y">
+              <div className="flex flex-col divide-y transition-all">
                 {products.map((item) => (
                   <div
                     key={item.id}
@@ -134,7 +143,11 @@ const Success = ({ products }: IProps) => {
                     <div className="flex items-center space-x-4">
                       <div className="relative flex h-16 w-16 items-center justify-center rounded-xl border border-gray-300 p-4 ">
                         <div className="trasition relative h-7 w-7 animate-bounce space-x-4 ">
-                          <Image src={logo} layout="fill" objectFit="contain" />
+                          <Image
+                            src={appleBlack}
+                            layout="fill"
+                            objectFit="contain"
+                          />
                         </div>
                         <p className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 text-xs font-semibold text-gray-100 ">
                           {item.quantity}

@@ -7,3 +7,8 @@ export const ipadProHero =
 
 export const logo =
   'https://www.apple.com/ac/globalnav/7/en_US/images/be15095f-5a20-57d0-ad14-cf4c638e223a/globalnav_apple_image__b5er5ngrzxqq_large.svg'
+
+export const appleBlack = 'https://rb.gy/vsvv2o'
+
+export const avatarDefault =
+  'https://img.seadn.io/files/0996c2cc8697727947c8bf3682c99a58.png?fit=max&w=1000'

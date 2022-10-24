@@ -1,20 +1,19 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
 import { useSelector } from 'react-redux'
 import { selectCartItems } from '../redux/CartSlice'
 import { logo, navLink } from '../utils/contants'
-// import { signIn, signOut, useSession } from 'next-auth/react'
+import { signIn, signOut, useSession } from 'next-auth/react'
+import { avatarDefault } from '../utils/contants'
 
-// Add feature google auth later
 const Navbar = () => {
-  // const session = useSession()
+  const { data: session } = useSession()
   const items = useSelector(selectCartItems)
-  const session = false
 
   return (
-    <header className="sticky top-0 z-30 flex h-[50px] w-full items-center justify-between  bg-[#323232] px-4 md:px-8">
+    <nav className="sticky top-0 z-30 flex h-[50px] w-full items-center justify-between  bg-[#323232] px-4 md:px-8">
       <div className="flex items-center justify-center md:w-1/5">
         <Link href="/">
           <div className="relative h-10 w-10 cursor-pointer opacity-75 transition hover:opacity-100">
@@ -75,19 +74,22 @@ const Navbar = () => {
             </svg>
           </div>
         </Link>
-        <div className="relative cursor-pointer p-2 text-gray-100 opacity-75 hover:opacity-100">
+        <div className="relative ">
           {session ? (
-            <span className="flex">
+            <span className="flex cursor-pointer p-2">
               <Image
-                src="https://img.seadn.io/files/0996c2cc8697727947c8bf3682c99a58.png?fit=max&w=1000"
+                src={session.user?.image || avatarDefault}
                 width={26}
                 height={26}
                 className="rounded-full transition"
-                onClick={() => {}}
+                onClick={() => signOut()}
               />
             </span>
           ) : (
-            <span className="" onClick={() => {}}>
+            <span
+              className="cursor-pointer p-2 text-gray-100 opacity-75 hover:opacity-100"
+              onClick={() => signIn()}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -106,7 +108,7 @@ const Navbar = () => {
           )}
         </div>
       </div>
-    </header>
+    </nav>
   )
 }
 
